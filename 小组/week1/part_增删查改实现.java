@@ -13,27 +13,28 @@ public class PSCURDPart_new extends JdbcUntils_高级应用封装{
     private String account;
     private long money;
 
+
     @Override
     public String toString() {
-        return "{" +
+        return " " +
                 "account='" + account + '\'' +
                 ", money=" + money +
-                '}';
+                ' ';
     }
 
     //插入
     @Test
     public void testInsert() throws Exception {
-        String sql="insert into t_user (account,PASSWORD,nickname) values(?,?,?);";
-        int i = executeUpdate(sql, "test3", "6645", "牛至1");
+        String sql="insert into bank (account,money) values(?,?);";
+        int i = executeUpdate(sql, "test3", "6645");
         System.out.println("i="+i);
     }
 
     //更新
     @Test
     public void testUpdate() throws Exception {
-        String sql="update t_user set nickname=? where id=?";
-        int i=executeUpdate(sql,"张跃牛","6");
+        String sql="update bank set money=? where id=?";
+        int i=executeUpdate(sql,"15600","6");
         System.out.println("i="+i);
     }
 
@@ -41,8 +42,8 @@ public class PSCURDPart_new extends JdbcUntils_高级应用封装{
     @Test
     public void testDelete() throws Exception {
 
-        String sql="delete from t_user where id=?";
-        int i=executeUpdate(sql,"15");
+        String sql="delete from bank where id=?";
+        int i=executeUpdate(sql,"5");
         System.out.println("i="+i);
     }
 
