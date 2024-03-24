@@ -18,14 +18,14 @@ string infixToPostfix(const string& infix) {//将中缀表达式转换为后缀表达式
 		if (isdigit(c)) {//判断是不是0-9的数字
 			postfix += c;
 		}
-		else if (c == '(') {//判断符号（）:括号的优先级最高
-			opStack.push(c);
+		else if (c == '(') {//判断符号（）:括号的优先级最高 
+			opStack.push(c);//入栈
 		}
 		else if (c == ')') {
 			while (!opStack.isEmpty() && opStack.peek() != '(') {//当栈不为空且栈顶元素不是'('时
-				postfix += opStack.pop();
+				postfix += opStack.pop();//将括号中的出栈
 			}
-			opStack.pop(); // 把')'出栈
+			opStack.pop(); //把'('出栈
 		}
 		else if (c == '+' || c == '-' || c == '*' || c == '/') {
 			while (!opStack.isEmpty() && precedence(opStack.peek()) >= precedence(c)) {//比较栈顶元素和当前操作符的优先级
