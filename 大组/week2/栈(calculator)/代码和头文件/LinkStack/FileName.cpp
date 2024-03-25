@@ -11,25 +11,25 @@ int precedence(char op) {//四则运算优先级判断
 }
 
 string infixToPostfix(const string& infix) {//将中缀表达式转换为后缀表达式
-	string postfix;//储存后缀表达式
+	string pos;//储存后缀表达式
 	Stack opStack;
 
 	for (char c : infix) {//遍历中缀表达式
 		if (isdigit(c)) {//判断是不是0-9的数字  使用isdigit函数
-			postfix += c;
+			pos += c;
 		}
 		else if (c == '(') {//判断符号（）:括号的优先级最高 
 			opStack.push(c);//入栈
 		}
 		else if (c == ')') {
 			while (!opStack.isEmpty() && opStack.peek() != '(') {//当栈不为空且栈顶元素不是'('时
-				postfix += opStack.pop();//将括号中的出栈
+				pos += opStack.pop();//将括号中的出栈
 			}
 			opStack.pop(); //把'('出栈
 		}
 		else if (c == '+' || c == '-' || c == '*' || c == '/') {
 			while (!opStack.isEmpty() && precedence(opStack.peek()) >= precedence(c)) {//比较栈顶元素和当前操作符的优先级
-				postfix += opStack.pop();
+				pos += opStack.pop();
 			}
 			opStack.push(c);
 		}
@@ -42,20 +42,20 @@ string infixToPostfix(const string& infix) {//将中缀表达式转换为后缀表达式
 
 
 	while (!opStack.isEmpty()) {//清空操作符栈，并将栈中剩余的操作符按正确的顺序追加到后缀表达式字符串postfix中
-		postfix += opStack.pop();
+		pos += opStack.pop();
 	}
 
 
 
-	return postfix;//返回后缀表达式
+	return pos;//返回后缀表达式
 
 
 }
 
-int evaluatePostfix(const string& postfix) {//使用后缀表达式进行运算
+int evaluatePostfix(const string& pos) {//使用后缀表达式进行运算
 	Stack operandStack;
 
-	for (char c : postfix) {
+	for (char c : pos) {
 		if (isdigit(c)) {
 			operandStack.push(c - '0');//将0-9的字符转换为int
 		}
