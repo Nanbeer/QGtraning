@@ -10,6 +10,7 @@ struct Node {
 };
 
 class Queue {
+
 private:
     Node* front;
     Node* rear;
@@ -30,6 +31,7 @@ public:
 
 
     void enqueue(void* data) {  // 将数据入队
+
         Node* newNode = new Node(data);  // 创建一个新节点
         if (rear == nullptr) {  // 如果队列为空
             front = newNode;  // 新节点同时作为队首和队尾
@@ -44,6 +46,7 @@ public:
     }
 
     void* dequeue() {  // 将数据出队
+
         if (front == nullptr) {  // 如果队列为空
             return nullptr;
         }
