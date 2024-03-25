@@ -15,8 +15,10 @@ class Stack {//栈
 private:
 	Node* top;
 
+
 public:
 	Stack() : top(nullptr) {}
+
 	~Stack() {
 		while (top != nullptr) {
 			Node* temp = top;
@@ -24,6 +26,7 @@ public:
 			delete temp;
 		}
 	}
+
 
 	void push(char c) {//入栈
 		Node* newNode = new Node(c);
@@ -42,7 +45,9 @@ public:
 		return c;
 	}
 
-	char peek() {
+
+
+	char peek() {//用来获取栈顶元素
 		if (isEmpty()) {
 			return '\0'; // 返回栈中的空字符
 		}
@@ -52,4 +57,5 @@ public:
 	bool isEmpty() {//判断栈中是否为空
 		return top == nullptr;
 	}
+
 };
