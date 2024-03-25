@@ -12,6 +12,8 @@ struct Node {//Á´±í
 };
 
 class Stack {//Õ»
+
+
 private:
 	Node* top;
 
