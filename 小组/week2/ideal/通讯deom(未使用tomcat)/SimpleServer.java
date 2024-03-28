@@ -14,7 +14,7 @@ public class SimpleServer {
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(8080);//定义监听
-            System.out.println("Server started. Listening on port 8080...");
+            System.out.println("服务器启动， 开始监听8080...");
 
             while (true) {//当监听到客户端发送的请求时，进入新的线程
                 Socket clientSocket = serverSocket.accept();
