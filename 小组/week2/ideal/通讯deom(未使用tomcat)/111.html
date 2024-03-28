@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Interaction Demo</title>
+</head>
+<body>
+<button id="sendSuccessRequest">send success(200) request</button>
+<button id="sendRedirectRequest">send redirect(300) request</button>
+<button id="sendNotFoundRequest">send not found(404) request</button>
+<button id="sendBadRequest">send bad(400) request</button>
+
+<div id="responseDisplay"></div>
+
+<script>
+    function sendRequest(path) {
+        var xhr = new XMLHttpRequest();//通过 XMLHttpRequest 对象向服务器发送请求
+        xhr.open('GET', 'http://localhost:8080' + path, true);
+        xhr.onreadystatechange = function() {//根据点击的事件来返回不同的状态码
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    document.getElementById('responseDisplay').innerText = xhr.responseText;
+                } else {
+                    document.getElementById('responseDisplay').innerText = 'Error occurred: ' + xhr.status;
+                }
+            }
+        };
+        xhr.send();
+    }
+
+
+    //给每个事件做监听器 点击哪个事件就发送哪个请求
+
+    document.getElementById('sendSuccessRequest').addEventListener('click', function() {
+        sendRequest('/success');
+    });
+
+    document.getElementById('sendRedirectRequest').addEventListener('click', function() {
+        sendRequest('/redirect');
+    });
+
+    document.getElementById('sendNotFoundRequest').addEventListener('click', function() {
+        sendRequest('/notfound');
+    });
+
+    document.getElementById('sendBadRequest').addEventListener('click', function() {
+        sendRequest('/badrequest');
+    });
+</script>
+</body>
+</html>

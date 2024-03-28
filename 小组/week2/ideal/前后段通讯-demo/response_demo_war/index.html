@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Status Code Demo</title>
+</head>
+<body>
+
+<!-- 设置按钮 -->
+
+<button onclick="sendGetRequest('success')">Send Success(200) - GET</button>
+<button onclick="sendGetRequest('redirect')">Send Redirect(302) - GET</button>
+<button onclick="sendGetRequest('notfound')">Not Found(404) - GET</button>
+<button onclick="sendGetRequest('servererror')">Send Error(500) - GET</button>
+<button onclick="sendGetRequest('other')">Other - GET</button>
+<br>
+<br>
+
+<button onclick="sendPostRequest('success')">Send Success(200) - POST</button>
+<button onclick="sendPostRequest('redirect')">Send Redirect(302) - POST</button>
+<button onclick="sendPostRequest('notfound')">Not Found(404) - POST</button>
+<button onclick="sendPostRequest('servererror')">Send Error(500) - POST</button>
+<button onclick="sendPostRequest('other')">Other - POST</button>
+<br>
+<br>
+
+<button onclick="sendHeadRequest('success')">Send Success(200) - Head</button>
+<button onclick="sendHeadRequest('notfound')">Not Found(404) - Head</button>
+<button onclick="sendHeadRequest('servererror')">Send Error(500) - Head</button>
+<button onclick="sendHeadRequest('other')">Other - Head</button>
+<br>
+<br>
+
+<button onclick="sendOptionsRequest('success')">Send Success(200) - Options</button>
+<button onclick="sendOptionsRequest('notfound')">Not Found(404) - Options</button>
+<button onclick="sendOptionsRequest('servererror')">Send Error(500) - Options</button>
+<button onclick="sendOptionsRequest('other')">Other - Options</button>
+
+
+<script>
+    function sendGetRequest(status) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'StatusServlet?status=' + status, true);
+        xhr.send();
+    }
+
+    function sendPostRequest(status) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'StatusServlet', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send('status=' + status);
+    }
+
+    function sendHeadRequest(status) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('HEAD', 'StatusServlet?status=' + status, true);
+        xhr.send();
+    }
+
+    function sendOptionsRequest(status) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('OPTIONS', 'StatusServlet?status=' + status, true);
+        xhr.send();
+    }
+
+
+</script>
+</body>
+</html>
