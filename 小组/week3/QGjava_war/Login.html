@@ -1,0 +1,37 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ajax and jQuery Example</title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                // 发送POST请求
+                $("#loginBtn").click(function(){
+                    var username = $("#username").val();
+                    var password = $("#password").val();
+
+                    $.post(" http://localhost:8080/QGjava_war/login",
+                    {
+                        username: username,
+                        password: password
+                    },
+                    function(data, status){
+                        $("#response").html(data); // 将响应显示在页面上
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+
+    <label for="username"></label><input type="text" id="username" placeholder="用户名">
+    <label for="password"></label><input type="password" id="password" placeholder="密码">
+    <button id="loginBtn">登录</button>
+
+    <div id="response"></div>
+
+    </body>
+    </html>
