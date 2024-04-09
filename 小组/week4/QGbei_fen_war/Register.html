@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('屏幕截图 2024-04-09 184957.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: flex-start; /* 将内容靠左 */
+            align-items: center;
+            height: 100vh;
+        }
+        .welcome-title {
+            font-size: 24px; /* 根据需要调整字体大小 */
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: left; /* 文本左对齐 */
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.3); /* 更透明 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            margin-left: 100px;
+        }
+        input[type="text"], input[type="password"], input[type="number"], select {
+            width: calc(100% - 20px);
+            height: 25px;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        select {
+            font-size: 14px;
+            height: 40px; /* 增加高度 */
+            vertical-align: top; /* 将垂直对齐方式调整为顶部对齐 */
+        }
+        button {
+            width: calc(100% - 20px);
+            padding: 5px 5px; /* 调整按钮高度和宽度 */
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            background-color: #0077cc;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* 添加过渡效果 */
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        #response {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .register-link a {
+            color: #0077cc;
+            text-decoration: none;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            // 验证用户名
+            $("#username").blur(function() {
+                var username = $(this).val();
+                var regex = /^[a-zA-Z0-9]{6,12}$/;
+                if (!regex.test(username)) {
+                    $("#usernameError").css("display", "block");
+                } else {
+                    $("#usernameError").css("display", "none");
+                }
+            });
+
+            // 验证密码
+            $("#password").blur(function() {
+                var password = $(this).val();
+                var regex = /^[a-zA-Z0-9]{6,12}$/;
+                if (!regex.test(password)) {
+                    $("#passwordError").css("display", "block");
+                } else {
+                    $("#passwordError").css("display", "none");
+                }
+            });
+
+            //注册功能
+            $("#registerBtn").click(function (event) {
+                event.preventDefault(); // 阻止默认表单提交行为
+
+                var username = $("#username").val();
+                var password = $("#password").val();
+                var age = $("#age").val();
+                var gender = $("#gender").val();
+
+                // 正则表达式校验
+                var regex = /^[a-zA-Z0-9]{6,12}$/;
+                var isValid = true;
+
+                if (!regex.test(username)) {
+                    $("#usernameError").css("display", "block");
+                    isValid = false;
+                } else {
+                    $("#usernameError").css("display", "none");
+                }
+
+                if (!regex.test(password)) {
+                    $("#passwordError").css("display", "block");
+                    isValid = false;
+                } else {
+                    $("#passwordError").css("display", "none");
+                }
+
+                if(isValid) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/QGbei_fen_war/register",
+                        data: {
+                            username: username,
+                            password: password,
+                            age: age,
+                            gender: gender
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status === "success") {
+                                alert("注册成功！"); // 添加注册成功的alert提示
+                                window.location.href = "Login.html"; // 注册成功后跳转到登录页
+                            } else {
+                                $("#response").html(data.message);
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            $("#response").html("注册过程中出现错误，请稍后再试！");
+                        }
+                    });
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="welcome-title">欢迎注册</h2> <!-- 新增欢迎注册标题 -->
+
+    <label for="username">用户名</label><br>
+    <input type="text" id="username" placeholder="请输入用户名"><br>
+    <span id="usernameError" style="display: none; color: red;">用户名必须是6-12位</span><br>
+
+    <label for="password">密码</label><br>
+    <input type="password" id="password" placeholder="请输入密码"><br>
+    <span id="passwordError" style="display: none; color: red;">密码必须是6-12位</span><br>
+
+    <label for="age">年龄</label><br>
+    <input type="number" id="age" placeholder="请输入年龄"><br>
+
+    <label for="gender">性别</label><br>
+    <select id="gender">
+        <option value="male">男性</option>
+        <option value="female">女性</option>
+    </select><br>
+
+    <button id="registerBtn">注册</button>
+
+    <div id="response"></div>
+
+    <div class="register-link">
+        已有账号？<a href="Login.html">登录</a>。
+    </div>
+</div>
+
+</body>
+</html>
+

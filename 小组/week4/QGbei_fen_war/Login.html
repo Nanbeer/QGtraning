@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax and jQuery Example</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('屏幕截图 2024-03-17 130120.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: flex-start; /* 将内容靠左 */
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            margin-left: 100px;
+        }
+        input[type="text"], input[type="password"] {
+            width: calc(100% - 20px);
+            height: 25px;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            background-color: #0077cc;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        #response {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .register-link a {
+            color: #0077cc;
+            text-decoration: none;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            // 发送POST请求
+            $("#loginBtn").click(function(){
+                var username = $("#username").val();
+                var password = $("#password").val();
+
+                $.post("http://localhost:8080/QGbei_fen_war/login",
+                    {
+                        username: username,
+                        password: password
+                    },
+                    function(data, status){
+                        $("#response").html(data.message); // 将响应的message部分显示在页面上
+                        // 登录成功后跳转到指定页面
+                        if(data.success) {
+                            window.location.href = "https://ys.mihoyo.com";
+                        }
+                    });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <label for="username">用户名</label><br>
+    <input type="text" id="username" placeholder="请输入用户名"><br>
+    <label for="password">密码</label><br>
+    <input type="password" id="password" placeholder="请输入密码"><br>
+    <button id="loginBtn">登录</button>
+
+    <div id="response"></div>
+
+    <div class="register-link">
+        没有账号？<a href="Register.html">注册一个</a>。
+    </div>
+</div>
+
+</body>
+</html>
